@@ -72,4 +72,22 @@ background:#d10000;
 border-radius:10px;
 }
 
-::-webkit-scrollbar-thumb:hover
+::-webkit-scrollbar-thumb:hover{
+background:#a00000;
+}
+
+/* Page loader spinner — shown briefly while a lazy-loaded route's code downloads */
+.page-loader-spinner{
+width:44px;
+height:44px;
+border:4px solid #f0dede;
+border-top-color:#d10000;
+border-radius:50%;
+animation:pageLoaderSpin 0.7s linear infinite;
+}
+
+@keyframes pageLoaderSpin{
+to{
+transform:rotate(360deg);
+}
+}

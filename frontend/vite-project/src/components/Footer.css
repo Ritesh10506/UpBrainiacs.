@@ -6,55 +6,207 @@
 
 /* MAIN AREA */
 .footer-top {
-  padding: 50px 6%; /* reduced for compact look */
+  padding: 50px 6%;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 40px;
 }
 
-/* BRAND WHITE BOX */
-.brand-box {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, .08);
-  padding: 30px;
-  border-radius: 20px;
+/* ===== BRAND 3D TILT CARD ===== */
+
+.footer-brand {
+  display: flex;
+  justify-content: center;
+}
+
+.brand-parent {
+  width: 100%;
   max-width: 420px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, .3);
+  perspective: 1200px;
+}
+
+.brand-box {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  border-radius: 28px;
+  padding: 34px 30px 26px;
+  background: linear-gradient(135deg, #fff 0%, #fdeaea 100%);
+  box-shadow: rgba(209, 0, 0, 0.15) 20px 30px 25px -25px,
+              rgba(0, 0, 0, 0.12) 0px 20px 25px -8px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  overflow: hidden;
 }
 
-/* LOGO */
+.brand-parent:hover .brand-box {
+  transform: rotate3d(1, 1, 0, 12deg);
+  box-shadow: rgba(209, 0, 0, 0.25) 25px 40px 25px -30px,
+              rgba(0, 0, 0, 0.15) 0px 25px 30px -5px;
+}
+
+/* Glass shine layer */
+.brand-glass {
+  position: absolute;
+  inset: 6px;
+  border-radius: 24px;
+  border-top-right-radius: 90px;
+  background: linear-gradient(0deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.65) 100%);
+  border-left: 1px solid rgba(255,255,255,0.8);
+  border-bottom: 1px solid rgba(255,255,255,0.8);
+  transform: translate3d(0, 0, 20px);
+  transform-style: preserve-3d;
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+}
+
+/* Decorative circles top-right */
+.brand-logo-deco {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 130px;
+  height: 130px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+
+.deco-circle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  background: rgba(209, 0, 0, 0.08);
+  backdrop-filter: blur(4px);
+  transition: all 0.5s ease-in-out;
+}
+
+.deco-circle1 {
+  width: 110px;
+  height: 110px;
+  transform: translate3d(0, 0, 15px);
+}
+
+.deco-circle2 {
+  width: 80px;
+  height: 80px;
+  top: 16px;
+  right: 16px;
+  background: rgba(209, 0, 0, 0.14);
+  transform: translate3d(0, 0, 30px);
+  transition-delay: 0.15s;
+}
+
+.deco-circle3 {
+  width: 50px;
+  height: 50px;
+  top: 22px;
+  right: 22px;
+  background: rgba(209, 0, 0, 0.2);
+  transform: translate3d(0, 0, 45px);
+  transition-delay: 0.3s;
+}
+
+.brand-parent:hover .deco-circle1 { transform: translate3d(0, 0, 25px); }
+.brand-parent:hover .deco-circle2 { transform: translate3d(0, 0, 45px); }
+.brand-parent:hover .deco-circle3 { transform: translate3d(0, 0, 65px); }
+
+/* Content */
+.brand-content {
+  position: relative;
+  transform: translate3d(0, 0, 26px);
+  transform-style: preserve-3d;
+}
+
 .brand-logo {
   font-size: 42px;
   font-weight: 800;
   letter-spacing: 1px;
   margin-bottom: 15px;
-  padding: 0;
-  display: inline-block;
-  box-shadow: none;
 }
 
-/* Logo color split */
-.logo-up {
-  color: #d10000;   /* red */
-}
+.logo-up { color: #d10000; }
+.logo-brainiacs { color: #000; }
+.logo-dot { color: #d10000; }
 
-.logo-brainiacs {
-  color: #000;      /* black */
-}
-
-.logo-dot {
-  color: #d10000;   /* red */
-}
-
-.footer-brand p {
+.brand-content p {
   color: #444;
   line-height: 1.7;
-  font-size: 16px;
-  text-align: center;
+  font-size: 15.5px;
+  max-width: 320px;
+}
+
+/* Bottom — social icons */
+.brand-bottom {
+  position: relative;
+  margin-top: 22px;
+  transform: translate3d(0, 0, 26px);
+  transform-style: preserve-3d;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transform-style: preserve-3d;
+}
+
+.social-icons a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  font-size: 17px;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, filter 0.2s ease;
+}
+
+.social-icons a:nth-child(1) { transition-delay: 0.05s; }
+.social-icons a:nth-child(2) { transition-delay: 0.1s; }
+.social-icons a:nth-child(3) { transition-delay: 0.15s; }
+.social-icons a:nth-child(4) { transition-delay: 0.2s; }
+
+.social-icons a.icon-instagram {
+  background: radial-gradient(circle at 30% 110%,
+    #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+.social-icons a.icon-facebook {
+  background: #1877F2;
+}
+
+.social-icons a.icon-linkedin {
+  background: #0A66C2;
+}
+
+.social-icons a.icon-youtube {
+  background: #FF0000;
+}
+}
+
+.social-icons a:nth-child(1) { transition-delay: 0.05s; }
+.social-icons a:nth-child(2) { transition-delay: 0.1s; }
+.social-icons a:nth-child(3) { transition-delay: 0.15s; }
+.social-icons a:nth-child(4) { transition-delay: 0.2s; }
+
+.brand-parent:hover .social-icons a {
+  transform: translate3d(0, -6px, 35px);
+  box-shadow: rgba(209, 0, 0, 0.3) -3px 14px 10px -6px;
+}
+
+.social-icons a:hover {
+  filter: brightness(1.1);
+}
+
+.social-icons a:active {
+  filter: brightness(0.9);
 }
 
 /* HEADINGS */
@@ -75,46 +227,6 @@
 .footer a:hover {
   color: #ff4b4b;
   transform: translateX(5px);
-}
-
-/* SOCIAL ICONS */
-.social-icons {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 10px;
-  margin-top: 25px;
-}
-
-.social-icons a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  flex: 0 1 auto;
-  border: 1px solid #ddd;
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 12.5px;
-  font-weight: 600;
-  white-space: nowrap;
-  margin: 0;
-  color: #222;
-  background: #f8f8f8;
-}
-
-.social-icons a:hover {
-  background: #d10000;
-  border-color: #d10000;
-  color: white;
-  transform: none;
-}
-
-.social-icon {
-  font-size: 1.1rem;
 }
 
 /* CONTACT */
@@ -170,10 +282,10 @@
 /* BOTTOM */
 .footer-bottom {
   text-align: center;
-  padding: 15px; /* reduced for compact look */
+  padding: 15px;
   border-top: 1px solid rgba(255,255,255,.15);
   color: #aaa;
-  font-size: 13px; /* slightly smaller */
+  font-size: 13px;
 }
 
 .footer-bottom span {
@@ -195,7 +307,7 @@
     grid-column: 1 / -1;
   }
 
-  .brand-box {
+  .brand-parent {
     max-width: 100%;
   }
 }
@@ -223,15 +335,15 @@
     text-align: right;
   }
 
-  .brand-box {
+  .brand-parent {
     margin: 0 auto;
     max-width: 100%;
     width: 100%;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  }
+
+  .brand-box {
+    padding: 20px;
+    min-height: 0;
   }
 
   .brand-logo {
@@ -239,9 +351,10 @@
     margin-bottom: 8px;
   }
 
-  .footer-brand p {
+  .brand-content p {
     font-size: 13px;
     line-height: 1.45;
+    max-width: 100%;
   }
 
   .footer a:hover {
@@ -251,15 +364,14 @@
   .social-icons {
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 12px;
-    gap: 6px;
+    margin-top: 4px;
+    gap: 8px;
   }
 
   .social-icons a {
-    padding: 6px 9px;
-    font-size: 10.5px;
-    border-radius: 7px;
-    flex: 0 1 auto;
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
   }
 
   .footer-links {
@@ -319,7 +431,7 @@
   }
 
   .brand-box {
-    padding: 22px;
+    padding: 18px;
   }
 
   .footer h3 {
@@ -331,8 +443,9 @@
   }
 
   .social-icons a {
-    padding: 7px 12px;
-    font-size: 11px;
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
   }
 
   .whatsapp-btn {
@@ -347,6 +460,7 @@
     font-size: 22px;
   }
 }
+
 /* Make phone/email links sit inline next to their emoji, not as blocks */
 .footer-contact p a {
   display: inline;

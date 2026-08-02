@@ -1,9 +1,366 @@
-.about-hero{
-  padding:120px 8% 60px;
-  text-align:center;
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap");
+
+.about-section {
+  background: #fff;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  padding-bottom: 130px;
 }
-.about-hero h1{
-  font-size:42px;
-  font-weight:900;
-  color:#111;
+
+.about-section > div {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 6%;
+  padding-right: 6%;
+}
+
+.about-heading {
+  font-family: "Outfit", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+/* ===== INTRO ===== */
+.about-intro {
+  max-width: 760px;
+  margin: 0 auto 70px;
+  text-align: center;
+  padding-top: 110px;
+}
+
+.about-eyebrow {
+  display: block;
+  color: #d10000;
+  font-weight: 700;
+  letter-spacing: 4px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.about-brandline {
+  font-family: "Outfit", sans-serif;
+  font-size: 42px;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+
+.brand-up { color: #111; }
+.brand-brainiacs { color: #d10000; }
+.brand-dot { color: #d10000; }
+
+.about-lead {
+  color: #444;
+  font-size: 15.5px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.about-lead-secondary {
+  color: #666;
+  font-size: 14px;
+}
+
+.about-divider {
+  width: 60px;
+  height: 3px;
+  background: #d10000;
+  border-radius: 6px;
+  margin: 20px auto 0;
+}
+
+/* ===== FOUNDERS — two side by side ===== */
+.founder-wrap {
+  margin-bottom: 70px;
+}
+
+.founders-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.founder-tilt {
+  border-radius: 28px !important;
+}
+
+.founder-card {
+  background: linear-gradient(135deg, #fff 0%, #fdeaea 100%);
+  padding: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-photo-side {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.founder-logo-badge {
+  position: absolute;
+  top: -14px;
+  left: calc(50% - 90px);
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.founder-logo-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.founder-accent-block {
+  position: absolute;
+  top: 16px;
+  left: calc(50% - 92px);
+  width: 180px;
+  height: 220px;
+  background: linear-gradient(135deg, #d10000 0%, #7a0000 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 15% 100%);
+  z-index: 1;
+}
+
+.founder-photo-frame {
+  position: relative;
+  z-index: 2;
+  width: 180px;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 15% 100%);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.founder-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(100%);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.founder-tilt:hover .founder-photo-frame img {
+  filter: grayscale(0%);
+  transform: scale(1.04);
+}
+
+.founder-quote-side {
+  flex: 1;
+}
+
+.founder-eyebrow {
+  display: block;
+  color: #d10000;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  font-size: 11px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.founder-quote-card {
+  position: relative;
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px 22px 20px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
+
+.quote-glyph {
+  font-family: "Outfit", sans-serif;
+  font-size: 40px;
+  color: #f0c0c0;
+  font-weight: 900;
+  line-height: 0.4;
+  display: block;
+}
+
+.quote-glyph-end {
+  text-align: right;
+  margin-top: 6px;
+}
+
+.founder-quote-text {
+  font-family: "Inter", sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.65;
+  margin: 6px 0;
+}
+
+.founder-principles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #d10000;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 12px 0 14px;
+}
+
+.founder-signature {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  border-top: 1px solid #f0dede;
+  padding-top: 12px;
+}
+
+.founder-name {
+  font-family: "Outfit", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #111;
+}
+
+.founder-role {
+  font-size: 10.5px;
+  color: #888;
+  text-align: right;
+}
+
+/* ===== SERVICES — 3D tilt grid ===== */
+.about-services {
+  margin-bottom: 0;
+}
+
+.services-tilt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: #f4f1ec;
+  perspective: 1200px;
+}
+
+.tilt-grid-cell {
+  position: relative;
+  border-right: 1px solid #e2ddd4;
+  border-bottom: 1px solid #e2ddd4;
+}
+
+.tilt-grid-cell:nth-child(2n) {
+  border-right: none;
+}
+
+.tilt-grid-cell:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.tilt-grid-cell::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: #d10000;
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 3;
+  will-change: transform;
+}
+
+.tilt-grid-cell:hover::before {
+  transform: scaleY(1);
+}
+
+.tilt-grid-inner {
+  position: relative;
+  padding: 40px 44px 44px;
+  transition: box-shadow 0.35s ease;
+  background: transparent;
+}
+
+.tilt-grid-cell:hover .tilt-grid-inner {
+  background: #fff;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.08);
+  z-index: 2;
+}
+
+.tilt-num {
+  display: block;
+  font-family: "Inter", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #d10000;
+  letter-spacing: 1px;
+  margin-bottom: 26px;
+}
+
+.tilt-icon {
+  width: 32px;
+  height: 32px;
+  color: #d10000;
+  margin-bottom: 28px;
+}
+
+.tilt-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tilt-title {
+  font-family: "Outfit", sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.tilt-desc {
+  font-size: 13.5px;
+  color: #6b6b6b;
+  line-height: 1.75;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .about-intro {
+    padding-top: 90px;
+  }
+
+  .about-brandline {
+    font-size: 30px;
+  }
+
+  .founders-row {
+    grid-template-columns: 1fr;
+  }
+
+  .founder-photo-frame,
+  .founder-accent-block {
+    width: 160px;
+  }
+}
+
+@media (max-width: 700px) {
+  .services-tilt-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tilt-grid-cell {
+    border-right: none !important;
+  }
+
+  .tilt-grid-cell:not(:last-child) {
+    border-bottom: 1px solid #e2ddd4 !important;
+  }
 }

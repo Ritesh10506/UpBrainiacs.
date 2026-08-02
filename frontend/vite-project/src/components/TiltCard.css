@@ -1,0 +1,27 @@
+.tilt-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  will-change: transform;
+  background: #fff;
+  height: 100%;
+}
+
+.tilt-card:hover {
+  box-shadow: 0 30px 50px rgba(209, 0, 0, 0.15);
+}
+
+.tilt-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 60%);
+}
+
+.tilt-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+}
