@@ -1,6 +1,7 @@
 import os
 import random
 import jwt
+import bcrypt
 from datetime import datetime, timedelta
 
 from fastapi import Depends, HTTPException
@@ -63,3 +64,42 @@ def generate_otp() -> str:
 
 def otp_expiry() -> datetime:
     return datetime.utcnow() + timedelta(minutes=OTP_EXPIRE_MINUTES)
+# -------------------------
+# Password hashing
+# -------------------------
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return bcrypt.checkpw(plain_password.encode(), hashed_password.encode())
+
+
+# -------------------------
+# Admin auth
+# -------------------------
+
+def create_admin_token(admin_id: int) -> str:
+    expire = datetime.utcnow() + timedelta(minutes=JWT_EXPIRE_MINUTES)
+    payload = {"sub": str(admin_id), "role": "admin", "exp": expire}
+    return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+
+
+def get_current_admin(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db),
+) -> models.Admin:
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        if payload.get("role") != "admin":
+            raise HTTPException(status_code=403, detail="Admin access required")
+        admin_id = int(payload.get("sub"))
+    except (jwt.PyJWTError, TypeError, ValueError):
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+    admin = db.query(models.Admin).filter(models.Admin.id == admin_id).first()
+    if not admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    return admin

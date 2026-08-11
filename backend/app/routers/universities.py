@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app import models, schemas, database
+from app.auth_utils import get_current_admin
 
 router = APIRouter(prefix="/universities", tags=["Universities"])
 
@@ -12,7 +13,11 @@ def get_db():
         db.close()
 
 @router.post("/", response_model=schemas.University)
-def create_university(university: schemas.UniversityCreate, db: Session = Depends(get_db)):
+def create_university(
+    university: schemas.UniversityCreate,
+    db: Session = Depends(get_db),
+    admin: models.Admin = Depends(get_current_admin)
+):
     db_university = models.University(**university.dict())
     db.add(db_university)
     db.commit()
@@ -31,7 +36,12 @@ def get_university(university_id: int, db: Session = Depends(get_db)):
     return uni
 
 @router.put("/{university_id}", response_model=schemas.University)
-def update_university(university_id: int, university: schemas.UniversityCreate, db: Session = Depends(get_db)):
+def update_university(
+    university_id: int,
+    university: schemas.UniversityCreate,
+    db: Session = Depends(get_db),
+    admin: models.Admin = Depends(get_current_admin)
+):
     db_uni = db.query(models.University).filter(models.University.id == university_id).first()
     if not db_uni:
         raise HTTPException(status_code=404, detail="University not found")
@@ -42,7 +52,11 @@ def update_university(university_id: int, university: schemas.UniversityCreate, 
     return db_uni
 
 @router.delete("/{university_id}")
-def delete_university(university_id: int, db: Session = Depends(get_db)):
+def delete_university(
+    university_id: int,
+    db: Session = Depends(get_db),
+    admin: models.Admin = Depends(get_current_admin)
+):
     db_uni = db.query(models.University).filter(models.University.id == university_id).first()
     if not db_uni:
         raise HTTPException(status_code=404, detail="University not found")

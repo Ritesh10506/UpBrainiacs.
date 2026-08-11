@@ -10,7 +10,7 @@ from app.routers import (
     services,
     appointments,
     auth,
-
+    admin_auth,
 )
 
 from app.database import (
@@ -30,6 +30,8 @@ tags_metadata = [
     {"name": "Services", "description": "Operations with services"},
     {"name": "Appointments", "description": "Operations with appointments"},
     {"name": "Health", "description": "Health check endpoints"},
+    {"name": "Auth", "description": "Student login (Google + OTP)"},
+    {"name": "Admin Auth", "description": "Admin login and account management"},
 ]
 
 app = FastAPI(
@@ -112,25 +114,27 @@ app.include_router(
 
 app.include_router(
     universities.router,
-    prefix="/universities",
     tags=["Universities"]
 )
 
 app.include_router(
     services.router,
-    prefix="/services",
     tags=["Services"]
 )
 
 app.include_router(
     appointments.router,
-    prefix="/appointments",
     tags=["Appointments"]
-
-
 )
+
 app.include_router(
     auth.router,
     prefix="/auth",
     tags=["Auth"]
+)
+
+app.include_router(
+    admin_auth.router,
+    prefix="/admin/auth",
+    tags=["Admin Auth"]
 )

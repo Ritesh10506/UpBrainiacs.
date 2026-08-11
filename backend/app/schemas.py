@@ -124,3 +124,35 @@ class TokenResponse(BaseModel):
     student_email: str
     student_full_name: str = ""
     student_profile_picture: str = ""
+
+
+# -------------------------
+# Admin Schemas
+# -------------------------
+
+class AdminLoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class AdminRegisterRequest(BaseModel):
+    email: str
+    password: str
+    full_name: str = ""
+
+
+class AdminTokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    admin_id: int
+    admin_email: str
+    admin_full_name: str = ""
+
+
+class AdminOut(BaseModel):
+    id: int
+    email: str
+    full_name: str = ""
+
+    class Config:
+        from_attributes = True
