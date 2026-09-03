@@ -181,9 +181,9 @@ const About = () => {
         {/* Founders — side by side */}
         <div className="founder-wrap">
           <div className="founders-row">
-            {founders.map((f) => (
+            {founders.map((f,idx) => (
               <TiltCard className="founder-tilt" maxTilt={4} key={f.id}>
-                <div className="founder-card">
+                <div className={`founder-card${idx % 2 === 1 ? " founder-card--reverse" : ""}`}>
                   <div className="founder-photo-side">
                     <span className="founder-logo-badge">
                       <img src="/ub-logo.png" alt="UpBrainiacs" loading="lazy" />

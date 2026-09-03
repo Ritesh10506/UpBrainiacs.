@@ -1,18 +1,11 @@
 import { useState, useMemo } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import budgetData, {
+  HOSTEL_PER_YEAR,
+  INSURANCE_ONE_TIME,
+} from "../data/budgetData";
 import "./BudgetCalculator.css";
-
-const countryData = {
-  georgia: { name: "Georgia", tuitionPerYear: 7000, livingPerYear: 3000, hostelPerYear: 1400, visaOneTime: 300, travelOneTime: 700, insurancePerYear: 250, durationYears: 6 },
-  kyrgyzstan: { name: "Kyrgyzstan", tuitionPerYear: 3500, livingPerYear: 1800, hostelPerYear: 800, visaOneTime: 200, travelOneTime: 500, insurancePerYear: 180, durationYears: 5 },
-  russia: { name: "Russia", tuitionPerYear: 5000, livingPerYear: 2500, hostelPerYear: 1100, visaOneTime: 250, travelOneTime: 600, insurancePerYear: 200, durationYears: 6 },
-  kazakhstan: { name: "Kazakhstan", tuitionPerYear: 4500, livingPerYear: 2200, hostelPerYear: 900, visaOneTime: 200, travelOneTime: 550, insurancePerYear: 180, durationYears: 5 },
-  romania: { name: "Romania", tuitionPerYear: 9000, livingPerYear: 4000, hostelPerYear: 1800, visaOneTime: 350, travelOneTime: 750, insurancePerYear: 300, durationYears: 6 },
-  uzbekistan: { name: "Uzbekistan", tuitionPerYear: 3500, livingPerYear: 1700, hostelPerYear: 750, visaOneTime: 200, travelOneTime: 500, insurancePerYear: 170, durationYears: 5 },
-  nepal: { name: "Nepal", tuitionPerYear: 6000, livingPerYear: 1800, hostelPerYear: 700, visaOneTime: 100, travelOneTime: 200, insurancePerYear: 150, durationYears: 5.5 },
-  poland: { name: "Poland", tuitionPerYear: 13000, livingPerYear: 5000, hostelPerYear: 2200, visaOneTime: 400, travelOneTime: 800, insurancePerYear: 350, durationYears: 6 },
-};
 
 const usdToInr = 87;
 
@@ -21,11 +14,6 @@ const rowIcons = {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M12 3L2 8l10 5 10-5-10-5z" />
       <path d="M6 10v6c0 1.5 2.5 3 6 3s6-1.5 6-3v-6" />
-    </svg>
-  ),
-  living: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M12 2v20M17 5H9.5a2.5 2.5 0 000 5H14a2.5 2.5 0 010 5H6" />
     </svg>
   ),
   hostel: (
@@ -40,7 +28,7 @@ const rowIcons = {
       <path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z" />
     </svg>
   ),
-  oneTime: (
+  otc: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <rect x="3" y="5" width="18" height="14" rx="2" />
       <path d="M3 9h18M7 13h4M7 16h6" />
@@ -48,21 +36,33 @@ const rowIcons = {
   ),
 };
 
+const countryKeys = Object.keys(budgetData);
+
 const BudgetCalculatorPage = () => {
-  const [country, setCountry] = useState("georgia");
-  const [years, setYears] = useState(countryData.georgia.durationYears);
+  const [country, setCountry] = useState(countryKeys[0]);
+  const [collegeIndex, setCollegeIndex] = useState(0);
   const [currency, setCurrency] = useState("usd");
 
-  const data = countryData[country];
+  const countryInfo = budgetData[country];
+  const college = countryInfo.colleges[collegeIndex];
+
+  const [years, setYears] = useState(college.durationYears);
 
   const handleCountryChange = (key) => {
     setCountry(key);
-    setYears(countryData[key].durationYears);
+    setCollegeIndex(0);
+    setYears(budgetData[key].colleges[0].durationYears);
+  };
+
+  const handleCollegeChange = (idxStr) => {
+    const idx = Number(idxStr);
+    setCollegeIndex(idx);
+    setYears(countryInfo.colleges[idx].durationYears);
   };
 
   const stepYears = (delta) => {
     setYears((prev) => {
-      const next = Math.round((prev + delta) * 2) / 2; // keep clean 0.5 steps
+      const next = prev + delta;
       if (next < 1) return 1;
       if (next > 7) return 7;
       return next;
@@ -70,33 +70,30 @@ const BudgetCalculatorPage = () => {
   };
 
   const breakdown = useMemo(() => {
-    const tuition = data.tuitionPerYear * years;
-    const living = data.livingPerYear * years;
-    const hostel = data.hostelPerYear * years;
-    const insurance = data.insurancePerYear * years;
-    const oneTime = data.visaOneTime + data.travelOneTime;
-    const totalUSD = tuition + living + hostel + insurance + oneTime;
+    const tuition = college.tuitionPerYear * years;
+    const hostel = HOSTEL_PER_YEAR * years;
+    const insurance = INSURANCE_ONE_TIME;
+    const otc = college.otc;
+    const totalUSD = tuition + hostel + insurance + otc;
 
     return {
       tuition,
-      living,
       hostel,
       insurance,
-      oneTime,
+      otc,
       totalUSD,
       totalINR: totalUSD * usdToInr,
     };
-  }, [data, years]);
+  }, [college, years]);
 
   const formatUSD = (n) => `$${n.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
   const formatINR = (n) => `₹${n.toLocaleString("en-IN", { maximumFractionDigits: 0 })}`;
 
   const rows = [
     { key: "tuition", label: "Tuition Fees", value: breakdown.tuition, suffix: `(${years} yrs)` },
-    { key: "living", label: "Living Expenses", value: breakdown.living, suffix: `(${years} yrs)` },
     { key: "hostel", label: "Hostel / Accommodation", value: breakdown.hostel, suffix: `(${years} yrs)` },
-    { key: "insurance", label: "Health Insurance", value: breakdown.insurance, suffix: `(${years} yrs)` },
-    { key: "oneTime", label: "Visa + Travel", value: breakdown.oneTime, suffix: "(one-time)" },
+    { key: "insurance", label: "Health Insurance", value: breakdown.insurance, suffix: "(one-time)" },
+    { key: "otc", label: "OTC (One-Time Charge)", value: breakdown.otc, suffix: "(one-time)" },
   ];
 
   return (
@@ -104,7 +101,7 @@ const BudgetCalculatorPage = () => {
       <title>MBBS Abroad Budget Calculator | UpBrainiacs</title>
       <meta
         name="description"
-        content="Estimate your total MBBS abroad budget in USD and INR — tuition, living costs, hostel, insurance, visa and travel — for Georgia, Russia, Kazakhstan, Kyrgyzstan, Uzbekistan, Romania, Nepal and Poland."
+        content="Estimate your total MBBS abroad budget in USD and INR — pick your country and college and get a tuition, hostel, insurance and one-time charge breakdown for Georgia, Russia, Kazakhstan, Kyrgyzstan, Uzbekistan, Romania, Nepal and Poland."
       />
       <link rel="canonical" href="https://upbrainiacs.com/budget-calculator" />
 
@@ -118,8 +115,8 @@ const BudgetCalculatorPage = () => {
           <span className="budget-eyebrow">PLAN YOUR JOURNEY</span>
           <h1 className="budget-heading">MBBS Abroad Budget Calculator</h1>
           <p className="budget-subtext">
-            Get an estimated cost breakdown in USD or INR for studying MBBS
-            in your chosen destination.
+            Pick your country and college to get an estimated cost breakdown
+            in USD or INR.
           </p>
           <div className="budget-header-divider" />
         </div>
@@ -147,9 +144,23 @@ const BudgetCalculatorPage = () => {
                 value={country}
                 onChange={(e) => handleCountryChange(e.target.value)}
               >
-                {Object.entries(countryData).map(([key, val]) => (
+                {countryKeys.map((key) => (
                   <option key={key} value={key}>
-                    {val.name}
+                    {budgetData[key].name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="budget-field">
+              <label>College / University</label>
+              <select
+                value={collegeIndex}
+                onChange={(e) => handleCollegeChange(e.target.value)}
+              >
+                {countryInfo.colleges.map((c, idx) => (
+                  <option key={c.name} value={idx}>
+                    {c.name}
                   </option>
                 ))}
               </select>
@@ -161,7 +172,7 @@ const BudgetCalculatorPage = () => {
                 <button
                   type="button"
                   className="stepper-btn"
-                  onClick={() => stepYears(-0.5)}
+                  onClick={() => stepYears(-1)}
                   aria-label="Decrease years"
                 >
                   −
@@ -170,7 +181,7 @@ const BudgetCalculatorPage = () => {
                 <button
                   type="button"
                   className="stepper-btn"
-                  onClick={() => stepYears(0.5)}
+                  onClick={() => stepYears(1)}
                   aria-label="Increase years"
                 >
                   +

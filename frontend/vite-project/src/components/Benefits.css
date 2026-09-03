@@ -304,19 +304,47 @@
 }
 
 @media (max-width: 900px) {
-  .benefits-section {
-    padding: 60px 6% 60px;
+  .about-intro {
+    padding-top: 90px;
   }
 
-  .benefits-brandline {
-    font-size: 32px;
+  .about-brandline {
+    font-size: 30px;
   }
 
-  .benefits-subhead {
-    font-size: 18px;
+  .founder-card,
+  .founder-card--reverse {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
   }
 
-  .benefits-para {
-    font-size: 14px;
+  .founder-photo-side {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .founder-eyebrow,
+  .founder-card--reverse .founder-eyebrow {
+    text-align: center;
+  }
+
+  .founder-signature,
+  .founder-card--reverse .founder-signature {
+    align-items: center;
+  }
+
+  .founder-name,
+  .founder-role,
+  .founder-card--reverse .founder-role {
+    text-align: center;
+  }
+
+  .founder-photo-frame,
+  .founder-accent-block,
+  .founder-card--reverse .founder-photo-frame,
+  .founder-card--reverse .founder-accent-block {
+    width: 160px;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 15% 100%);
   }
 }

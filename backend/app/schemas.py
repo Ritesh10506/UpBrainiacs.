@@ -32,11 +32,19 @@ class Student(StudentBase):
 
 class UniversityBase(BaseModel):
     name: str
+    image_url: str = ""
+    description: str = ""
+    established: str = ""
+    university_type: str = ""
+    location: str = ""
     country: str
+    duration: str = ""
+    medium: str = ""
+    recognition: str = ""
     degree_type: str
+    mbbs_seats: str = ""
     fees: str
     scholarships: str
-
 
 class UniversityCreate(UniversityBase):
     pass

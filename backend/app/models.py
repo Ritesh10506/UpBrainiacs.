@@ -19,8 +19,17 @@ class University(Base):
     __tablename__ = "universities"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(200))
+    image_url = Column(String(500), nullable=True)
+    description = Column(String(1000), nullable=True)
+    established = Column(String(10), nullable=True)
+    university_type = Column(String(100), nullable=True)
+    location = Column(String(150), nullable=True)
     country = Column(String(100))
+    duration = Column(String(50), nullable=True)
+    medium = Column(String(50), nullable=True)
+    recognition = Column(String(200), nullable=True)
     degree_type = Column(String(50))
+    mbbs_seats = Column(String(20), nullable=True)
     fees = Column(String(50))
     scholarships = Column(String(200))
 

@@ -71,14 +71,14 @@
   margin: 20px auto 0;
 }
 
-/* ===== FOUNDERS — two side by side ===== */
+/* ===== FOUNDERS — stacked rows, photo left / description right ===== */
 .founder-wrap {
   margin-bottom: 70px;
 }
 
 .founders-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 }
 
@@ -89,9 +89,14 @@
 .founder-card {
   background: linear-gradient(135deg, #fff 0%, #fdeaea 100%);
   padding: 30px;
-  height: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 34px;
+}
+
+.founder-card--reverse {
+  flex-direction: row-reverse;
 }
 
 .founder-photo-side {
@@ -99,7 +104,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 22px;
+  flex-shrink: 0;
+  width: 200px;
 }
 
 .founder-logo-badge {
@@ -159,8 +165,16 @@
   transform: scale(1.04);
 }
 
+/* Mirror the diagonal shape so the taper points toward the card center,
+   not off the outer edge, when the photo is on the right */
+.founder-card--reverse .founder-accent-block,
+.founder-card--reverse .founder-photo-frame {
+  clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 85%);
+}
+
 .founder-quote-side {
   flex: 1;
+  min-width: 0;
 }
 
 .founder-eyebrow {
@@ -170,7 +184,11 @@
   letter-spacing: 2.5px;
   font-size: 11px;
   margin-bottom: 12px;
-  text-align: center;
+  text-align: left;
+}
+
+.founder-card--reverse .founder-eyebrow {
+  text-align: right;
 }
 
 .founder-quote-card {
@@ -223,6 +241,11 @@
   padding-top: 12px;
 }
 
+/* Name/role move to the left when the photo is on the right */
+.founder-card--reverse .founder-signature {
+  align-items: flex-start;
+}
+
 .founder-name {
   font-family: "Outfit", sans-serif;
   font-size: 14px;
@@ -236,6 +259,9 @@
   text-align: right;
 }
 
+.founder-card--reverse .founder-role {
+  text-align: left;
+}
 /* ===== SERVICES — 3D tilt grid ===== */
 .about-services {
   margin-bottom: 0;
@@ -252,6 +278,7 @@
   position: relative;
   border-right: 1px solid #e2ddd4;
   border-bottom: 1px solid #e2ddd4;
+  overflow: hidden;
 }
 
 .tilt-grid-cell:nth-child(2n) {
@@ -341,8 +368,32 @@
     font-size: 30px;
   }
 
-  .founders-row {
-    grid-template-columns: 1fr;
+  .founder-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+  }
+
+  .founder-card--reverse {
+    flex-direction: column;
+  }
+
+  .founder-card--reverse .founder-eyebrow {
+    text-align: center;
+  }
+
+  .founder-card--reverse .founder-photo-frame,
+  .founder-card--reverse .founder-accent-block {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 15% 100%);
+  }
+
+  .founder-photo-side {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .founder-eyebrow {
+    text-align: center;
   }
 
   .founder-photo-frame,

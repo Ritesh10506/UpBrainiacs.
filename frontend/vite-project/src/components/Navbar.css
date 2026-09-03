@@ -11,7 +11,7 @@
   height: 80px;
 
   display: grid;
-  grid-template-columns: 240px 1fr 220px;
+  grid-template-columns: auto 1fr auto;
 
   align-items: center;
 
@@ -279,7 +279,7 @@
 @media(max-width: 992px){
 
   .navbar{
-    grid-template-columns: 220px 1fr 180px;
+    grid-template-columns: auto 1fr auto;
     padding: 0 25px;
   }
 

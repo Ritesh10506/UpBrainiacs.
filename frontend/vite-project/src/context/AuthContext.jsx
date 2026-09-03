@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {
+          // /auth/me returns StudentAccountOut directly (id, email, full_name, profile_picture, etc.)
           setStudent(await res.json());
         } else {
           logout();
@@ -44,8 +45,13 @@ export function AuthProvider({ children }) {
     const data = await res.json();
     localStorage.setItem("ub_token", data.access_token);
     setToken(data.access_token);
-    setStudent(data.student);
-    return data.student;
+    setStudent({
+      id: data.student_id,
+      email: data.student_email,
+      full_name: data.student_full_name,
+      profile_picture: data.student_profile_picture,
+    });
+    return data;
   };
 
   const requestOtp = async (email) => {
@@ -74,8 +80,13 @@ export function AuthProvider({ children }) {
     const data = await res.json();
     localStorage.setItem("ub_token", data.access_token);
     setToken(data.access_token);
-    setStudent(data.student);
-    return data.student;
+    setStudent({
+      id: data.student_id,
+      email: data.student_email,
+      full_name: data.student_full_name,
+      profile_picture: data.student_profile_picture,
+    });
+    return data;
   };
 
   const logout = () => {
